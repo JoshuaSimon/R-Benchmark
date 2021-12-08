@@ -50,8 +50,8 @@ multithreaed_benchmark <- function(data, max_iter, threads) {
 
 main <- function() {
   data(iris)
-  test_runs <- 5
-  max_iter <- 1e5
+  test_runs <- 1
+  max_iter <- 1e6
   
   # Run the singlethreaded benchmark.
   print("Starting singlethreaded run...")
