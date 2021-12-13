@@ -36,6 +36,7 @@ singlethreaed_benchmark <- function(data, max_iter) {
   }
 }  
 
+
 multithreaed_benchmark <- function(data, max_iter, threads) {
   cores <- threads
   cl <- makeCluster(cores[1]) 
@@ -54,28 +55,32 @@ main <- function() {
   data(iris)
 
   # Set parameters for the benchmark runs.
-  test_runs <- 5
-  max_iter <- 2e4
+  test_runs <- 3
+  max_iter <- 5e4
   
   # Run the singlethreaded benchmark.
   print("Starting singlethreaded run...")
   single_time <- timer(test_runs = test_runs, func = singlethreaed_benchmark,
                        data = iris, max_iter = max_iter)
-  print(paste0("Runtime on ", 1, " threds took ", round(single_time, 3), " seconds in average."))
-  
-  # Run the multithreaed on 4 cores benchmark.
+  print(paste0("Runtime on ", 1, " threds took ", round(single_time, 3), " seconds on average."))
+
+  # Run the multithreaed benchmark on 2-4 cores.
   if (detectCores() >= 4) {
-      print("Starting multithreaded run...")
-      multi_time <- timer(test_runs = test_runs, func = multithreaed_benchmark,
-                       data = iris, max_iter = max_iter, threads = 4)
-      print(paste0("Runtime on ", 4, " threds took ", round(multi_time, 3), " seconds in average."))
+      for (cores in 2:4) {
+        print("Starting multithreaded run...")
+        multi_time <- timer(test_runs = test_runs, func = multithreaed_benchmark,
+                            data = iris, max_iter = max_iter, threads = cores)
+        print(paste0("Runtime on ", cores, " threds took ", round(multi_time, 3), " seconds on average."))
+    }
   }
   
-  # Run the multithreaed on all cores benchmark.
-  print("Starting multithreaded run...")
-  multi_time <- timer(test_runs = test_runs, func = multithreaed_benchmark,
-                       data = iris, max_iter = max_iter, threads = detectCores())
-  print(paste0("Runtime on ", detectCores(), " threds took ", round(multi_time, 3), " seconds in average."))
+  # Run the multithreaed on benchmark all cores.
+  if (detectCores() >= 5) {
+    print("Starting final multithreaded run on all cores...")
+    multi_time <- timer(test_runs = test_runs, func = multithreaed_benchmark,
+                        data = iris, max_iter = max_iter, threads = detectCores())
+    print(paste0("Runtime on ", detectCores(), " threds took ", round(multi_time, 3), " seconds on average."))
+  }
 }
 
 
