@@ -62,7 +62,7 @@ main <- function() {
   print("Starting singlethreaded run...")
   single_time <- timer(test_runs = test_runs, func = singlethreaed_benchmark,
                        data = iris, max_iter = max_iter)
-  print(paste0("Runtime on ", 1, " threds took ", round(single_time, 3), " seconds on average."))
+  print(paste0("Runtime on ", 1, " threads took ", round(single_time, 3), " seconds on average."))
 
   # Run the multithreaed benchmark on 2-4 cores.
   if (detectCores() >= 4) {
@@ -70,7 +70,7 @@ main <- function() {
         print("Starting multithreaded run...")
         multi_time <- timer(test_runs = test_runs, func = multithreaed_benchmark,
                             data = iris, max_iter = max_iter, threads = cores)
-        print(paste0("Runtime on ", cores, " threds took ", round(multi_time, 3), " seconds on average."))
+        print(paste0("Runtime on ", cores, " threads took ", round(multi_time, 3), " seconds on average."))
     }
   }
   
@@ -79,7 +79,7 @@ main <- function() {
     print("Starting final multithreaded run on all cores...")
     multi_time <- timer(test_runs = test_runs, func = multithreaed_benchmark,
                         data = iris, max_iter = max_iter, threads = detectCores())
-    print(paste0("Runtime on ", detectCores(), " threds took ", round(multi_time, 3), " seconds on average."))
+    print(paste0("Runtime on ", detectCores(), " threads took ", round(multi_time, 3), " seconds on average."))
   }
 }
 
