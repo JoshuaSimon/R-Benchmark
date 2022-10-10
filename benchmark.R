@@ -2,9 +2,9 @@
 # Author: Joshua Simon
 # Date: 08.12.2021
 # ---------------------------------------------------- #
-# This R script contains a benchmark implementation to 
-# check the performance for single and multithreaded 
-# workloads. The results are printed to the console. 
+# This R script contains a benchmark implementation to
+# check the performance for single and multithreaded
+# workloads. The results are printed to the console.
 # To run this script open an R session an type
 # source("<filepath to this script>").
 # ---------------------------------------------------- #
@@ -21,11 +21,11 @@ timer <- function(test_runs, func, data, max_iter, ...) {
     start_time <- Sys.time()
 
     func(data, max_iter, ...)
-    
+
     end_time <- Sys.time()
     time_taken[run] <- difftime(end_time, start_time, units = "secs")
   }
-  return (mean(time_taken))
+  return(mean(time_taken))
 }
 
 
@@ -34,7 +34,7 @@ singlethreaed_benchmark <- function(data, max_iter) {
   for (i in 1:max_iter) {
     model[i] <- lm(formula = Petal.Width ~ ., data = data)$df.residual
   }
-}  
+}
 
 
 multithreaed_benchmark <- function(data, max_iter, threads) {
@@ -47,7 +47,7 @@ multithreaed_benchmark <- function(data, max_iter, threads) {
   }
 
   stopCluster(cl)
-}  
+}
 
 
 main <- function() {
